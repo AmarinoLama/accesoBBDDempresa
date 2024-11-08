@@ -1,4 +1,4 @@
-package edu.badpals.Conexion;
+package edu.badpals.Tablas;
 
 public class Proxecto {
 
