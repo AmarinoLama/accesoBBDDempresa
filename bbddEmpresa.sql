@@ -68,7 +68,7 @@ ALTER TABLE empregado_proxecto
     ADD CONSTRAINT FK_nss_empregado FOREIGN KEY (nss_empregado) REFERENCES empregado(nss),
     ADD CONSTRAINT FK_num_proxecto FOREIGN KEY (num_proxecto) REFERENCES proxecto(num_proxecto);
 
-/* SET FOREIGN_KEY_CHECKS=0; */
+SET FOREIGN_KEY_CHECKS=1;
 /* SET FOREIGN_KEY_CHECKS=1; */
 
 INSERT INTO DEPARTAMENTO VALUES (1, 'PERSOAL', '1111111', '2000-03-12');
