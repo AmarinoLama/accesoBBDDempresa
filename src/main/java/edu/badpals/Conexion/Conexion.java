@@ -170,4 +170,49 @@ public class Conexion {
 
     /* Exercicio 2.5. Execución de procedementos almacenados e funcións */
 
+    public static void pr_cambioDomicilio(String nss, String rua, Integer numero, String piso, String cp, String localidad) {
+        try {
+            String query = "{CALL pr_cambioDomicilio(?, ?, ?, ?, ?, ?)}";
+            Connection conexion = connectDatabase();
+            CallableStatement cs = conexion.prepareCall(query);
+            cs.setString(1, nss);
+            cs.setString(2, rua);
+            cs.setInt(3, numero);
+            cs.setString(4, piso);
+            cs.setString(5, cp);
+            cs.setString(6, localidad);
+            cs.execute();
+            cs.close();
+            conexion.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static Proxecto pr_DatosProxectos(Integer numProxecto) {
+        Proxecto proxecto = null;
+        try {
+            String query = "{CALL pr_DatosProxectos(?, ?, ?, ?)}";
+            Connection conexion = connectDatabase();
+            CallableStatement cs = conexion.prepareCall(query);
+
+            // Parámetros de entrada
+            cs.setInt(1, numProxecto);
+
+            // Parámetros de salida
+            cs.registerOutParameter(2, java.sql.Types.VARCHAR); // nome_proxecto_salida
+            cs.registerOutParameter(3, java.sql.Types.VARCHAR); // lugar_salida
+            cs.registerOutParameter(4, java.sql.Types.INTEGER); // num_departamento_salida
+
+            // LLamamos al procedimiento
+            cs.execute();
+
+            // Salida de datos
+            proxecto = new Proxecto(numProxecto, cs.getString(2), cs.getString(3), cs.getInt(4));
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return proxecto;
+    }
 }

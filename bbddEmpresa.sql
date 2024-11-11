@@ -68,7 +68,53 @@ ALTER TABLE empregado_proxecto
     ADD CONSTRAINT FK_nss_empregado FOREIGN KEY (nss_empregado) REFERENCES empregado(nss),
     ADD CONSTRAINT FK_num_proxecto FOREIGN KEY (num_proxecto) REFERENCES proxecto(num_proxecto);
 
-SET FOREIGN_KEY_CHECKS=1;
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS pr_cambioDomicilio $$
+CREATE PROCEDURE pr_cambioDomicilio (
+    IN nss_empregado INT UNSIGNED,
+    IN rua_nueva VARCHAR(30),
+    IN numero_rua_nueva INT,
+    IN piso_nuevo VARCHAR(4),
+    IN cp_nuevo CHAR(5),
+    IN localidade_nueva VARCHAR(25)
+) 
+BEGIN
+    UPDATE empregado 
+    SET 
+        rua = rua_nueva, 
+        numero_rua = numero_rua_nueva, 
+        piso = piso_nuevo, 
+        cp = cp_nuevo, 
+        localidade = localidade_nueva 
+    WHERE 
+        nss = nss_empregado;
+END $$
+
+DROP PROCEDURE IF EXISTS pr_DatosProxectos $$
+CREATE PROCEDURE pr_DatosProxectos (
+    IN num_proxecto_buscar INT,
+    OUT nome_proxecto_salida VARCHAR(25),
+    OUT lugar_salida VARCHAR(25),
+    OUT num_departamento_salida INT
+) 
+BEGIN
+    SELECT nome_proxecto, lugar, num_departamento 
+    INTO nome_proxecto_salida, lugar_salida, num_departamento_salida
+    FROM proxecto 
+    WHERE num_proxecto = num_proxecto_buscar;
+END $$
+
+DROP PROCEDURE IF EXISTS pr_DepartControlaProxec $$
+CREATE PROCEDURE pr_DepartControlaProxec (
+	IN numProxectos
+)
+BEGIN
+	SELECT 
+
+DELIMITER ;
+
+/* SET FOREIGN_KEY_CHECKS=0; */
 /* SET FOREIGN_KEY_CHECKS=1; */
 
 INSERT INTO DEPARTAMENTO VALUES (1, 'PERSOAL', '1111111', '2000-03-12');

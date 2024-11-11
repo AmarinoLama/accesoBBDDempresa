@@ -4,6 +4,10 @@ import edu.badpals.Conexion.Conexion;
 import edu.badpals.Tablas.Departamento;
 import edu.badpals.Tablas.Proxecto;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -91,5 +95,26 @@ public class Controlador {
 
     /* Exercicio 2.5. Execución de procedementos almacenados e funcións */
 
+    public static void pr_cambioDomicilio() {
+        System.out.println("Introduce el nss del empleado que quieres cambiar el domicilio");
+        String nss = sc.nextLine().toUpperCase();
+        System.out.println("Introduce la nueva calle del empleado");
+        String calle = sc.nextLine().toUpperCase();
+        System.out.println("Introduce el nuevo número de la calle del empleado");
+        Integer numero = Integer.parseInt(sc.nextLine());
+        System.out.println("Introduce el nuevo piso del empleado");
+        String piso = sc.nextLine().toUpperCase();
+        System.out.println("Introduce el nuevo código postal del empleado");
+        String cp = sc.nextLine().toUpperCase();
+        System.out.println("Introduce la nueva localidad del empleado");
+        String localidad = sc.nextLine().toUpperCase();
+        Conexion.pr_cambioDomicilio(nss, calle, numero, piso, cp, localidad);
+    }
 
+    public static void pr_DatosProxectos() {
+        System.out.println("Introduce el número del proyecto que quieres buscar");
+        int numProyecto = Integer.parseInt(sc.nextLine());
+        Proxecto proxecto = Conexion.pr_DatosProxectos(numProyecto);
+        System.out.println("Num proxecto : " + proxecto.getNum_proxecto() + " / Nome proxecto : " + proxecto.getNome_proxecto() + " / Lugar : " + proxecto.getLugar() + " / Num departamento : " + proxecto.getNum_departamento());
+    }
 }
