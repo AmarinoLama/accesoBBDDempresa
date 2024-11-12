@@ -3,6 +3,7 @@ package edu.badpals.Conexion;
 import edu.badpals.Tablas.Departamento;
 import edu.badpals.Tablas.Proxecto;
 
+import javax.print.DocFlavor;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -214,5 +215,55 @@ public class Conexion {
             System.out.println("Error: " + e.getMessage());
         }
         return proxecto;
+    }
+
+    public static void pr_DepartControlaProxec(Integer numProxectosBuscar) {
+        try {
+            String query = "{CALL pr_DepartControlaProxec(?)}";
+            Connection conexion = connectDatabase();
+            CallableStatement cs = conexion.prepareCall(query);
+
+            // Parámetro de entrada
+            cs.setInt(1, numProxectosBuscar);
+
+            // Llamamos al procedimiento
+            ResultSet rs = cs.executeQuery();
+
+            // Procesamos los resultados
+            while (rs.next()) {
+                int numDepartamento = rs.getInt("num_departamento");
+                String nomeDepartamento = rs.getString("nome_departamento");
+                String nssDirige = rs.getString("nss_dirige");
+                Date dataDireccion = rs.getDate("data_direccion");
+
+                System.out.println("Num departamento: " + numDepartamento + " / Nome departamento: "
+                        + nomeDepartamento + " / Nss dirige: " + nssDirige + " / Data dirección: " + dataDireccion);
+            }
+
+            rs.close();
+            cs.close();
+            conexion.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public static void fn_nEmpDepart(String nombreDept) {
+        try {
+            String query = "SELECT (fn_nEmpDepart(?))";
+            Connection conexion = connectDatabase();
+            CallableStatement cs = conexion.prepareCall(query);
+
+            cs.setString(1, nombreDept);
+            ResultSet rs = cs.executeQuery();
+
+            if (rs.next()) {
+                System.out.println("Número de empleados en el departamento " + rs.getInt(1));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 }

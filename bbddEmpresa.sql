@@ -107,13 +107,37 @@ END $$
 
 DROP PROCEDURE IF EXISTS pr_DepartControlaProxec $$
 CREATE PROCEDURE pr_DepartControlaProxec (
-	IN numProxectos
+    IN numProxectos INT
 )
 BEGIN
-	SELECT 
+    -- Seleccionamos los departamentos que cumplen con el número mínimo de proyectos
+    SELECT d.num_departamento, d.nome_departamento, d.nss_dirige, d.data_direccion
+    FROM departamento d
+    JOIN proxecto p ON d.num_departamento = p.num_departamento
+    GROUP BY d.num_departamento, d.nome_departamento, d.nss_dirige, d.data_direccion
+    HAVING COUNT(p.num_proxecto) >= numProxectos;
+END $$
+
+DROP FUNCTION IF EXISTS fn_nEmpDepart;
+CREATE FUNCTION fn_nEmpDepart(nome_departamento VARCHAR(25))
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE num_empregados INT;
+
+    -- Contamos los empleados del departamento dado
+    SELECT COUNT(*)
+    INTO num_empregados
+    FROM empregado e
+    JOIN departamento d ON e.num_departamento = d.num_departamento
+    WHERE d.nome_departamento = nome_departamento;
+
+    RETURN num_empregados;
+END $$
+
 
 DELIMITER ;
-
+select fn_nEmpDepart('PERSOAL');
 /* SET FOREIGN_KEY_CHECKS=0; */
 /* SET FOREIGN_KEY_CHECKS=1; */
 

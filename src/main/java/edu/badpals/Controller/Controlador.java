@@ -117,4 +117,16 @@ public class Controlador {
         Proxecto proxecto = Conexion.pr_DatosProxectos(numProyecto);
         System.out.println("Num proxecto : " + proxecto.getNum_proxecto() + " / Nome proxecto : " + proxecto.getNome_proxecto() + " / Lugar : " + proxecto.getLugar() + " / Num departamento : " + proxecto.getNum_departamento());
     }
+
+    public static void pr_DepartControlaProxec() {
+        System.out.println("Introduce el número del proyectos que quieres que tenga un departamento (n o más)");
+        int numDepartamento = Integer.parseInt(sc.nextLine());
+        Conexion.pr_DepartControlaProxec(numDepartamento);
+    }
+
+    public static void fn_nEmpDepart() {
+        System.out.println("Introduce el nombre del departamento del que quieres saber cuantos empleados tiene");
+        String nombreDepartamento = sc.nextLine().toUpperCase();
+        Conexion.fn_nEmpDepart(nombreDepartamento);
+    }
 }
