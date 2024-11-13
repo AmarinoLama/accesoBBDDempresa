@@ -266,4 +266,81 @@ public class Conexion {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
+    /* Exercicio 2.6. Xestión do resultado dunha consulta */
+
+    public static void tiposResulset() {
+        try {
+            Connection conexion = connectDatabase();
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            System.out.println(dbmd.getDatabaseProductName());
+            System.out.println(dbmd.getDatabaseProductVersion());
+            System.out.println(dbmd.getDatabaseMajorVersion());
+            System.out.println(dbmd.getDatabaseMinorVersion());
+            System.out.println(dbmd.getDriverName());
+            System.out.println(dbmd.getDriverMajorVersion());
+            System.out.println(dbmd.getDriverMinorVersion());
+            System.out.println(dbmd.getDriverVersion());
+            System.out.println(dbmd.getURL());
+            System.out.println(dbmd.getUserName());
+            System.out.println(dbmd.isReadOnly());
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public static void insertProyectoAvanzado(Proxecto proxecto) {
+        try {
+            if (!existProyecto(proxecto.getNum_proxecto(), proxecto.getNome_proxecto()) && existDept(proxecto.getNum_departamento())) {
+                String query = "INSERT INTO proxecto (num_proxecto, nome_proxecto, lugar, num_departamento) VALUES (?, ?, ?, ?)";
+                Connection conexion = connectDatabase();
+                PreparedStatement ps = conexion.prepareStatement(query);
+                ps.setInt(1, proxecto.getNum_proxecto());
+                ps.setString(2, proxecto.getNome_proxecto());
+                ps.setString(3, proxecto.getLugar());
+                ps.setInt(4, proxecto.getNum_departamento());
+            } else if (existProyecto(proxecto.getNum_proxecto(), proxecto.getNome_proxecto())) {
+                System.out.println("No se puede crear el proyecto porque su número o nombre se repite");
+            } else if (!existDept(proxecto.getNum_departamento())) {
+                System.out.println("No se puede crear el proyecto porque el departamento al que referencia no existe");
+            } else {
+                System.out.println("Error al crearse el proyecto");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean existProyecto(Integer numProyecto, String nomeProxecto) {
+        try {
+            String query = "SELECT * FROM proxecto WHERE num_proxecto = ? AND nome_proxecto = ?";
+            Connection conexion = connectDatabase();
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ps.setInt(1, numProyecto);
+            ps.setString(2, nomeProxecto);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
+    }
+
+    public static boolean existDept(Integer numDept) {
+        try {
+            String query = "SELECT * FROM departamento WHERE num_departamento = ?";
+            Connection conexion = connectDatabase();
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ps.setInt(1, numDept);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
 }

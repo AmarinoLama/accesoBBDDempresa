@@ -129,4 +129,23 @@ public class Controlador {
         String nombreDepartamento = sc.nextLine().toUpperCase();
         Conexion.fn_nEmpDepart(nombreDepartamento);
     }
+
+    /* Exercicio 2.6. Xestión do resultado dunha consulta */
+
+    public static void tiposResulset() {
+        System.out.println("Información de los resulsets");
+        Conexion.tiposResulset();
+    }
+
+    public static void insertProyectoAvanzado() {
+        System.out.println("Introduce el número del nuevo proyecto");
+        int numProyecto = Integer.parseInt(sc.nextLine());
+        System.out.println("Introduce el nombre del nuevo proyecto");
+        String nombreProyecto = sc.nextLine().toUpperCase();
+        System.out.println("Introduce la localidad del nuevo proyecto");
+        String localidad = sc.nextLine().toUpperCase();
+        System.out.println("Introduce el número de departamento del nuevo proyecto");
+        int numDepartamento = Integer.parseInt(sc.nextLine());
+        Conexion.insertProyectoAvanzado(new Proxecto(numProyecto, nombreProyecto, localidad, numDepartamento));
+    }
 }
