@@ -343,4 +343,49 @@ public class Conexion {
         }
         return false;
     }
+
+    public static void subirSalarioDept(Integer numDept, double salarioSubir) {
+        try {
+            String query = "UPDATE empregado SET salario = salario + ? WHERE num_departamento_pertenece = ?";
+            Connection conexion = connectDatabase();
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ps.setDouble(1, salarioSubir);
+            ps.setInt(2, numDept);
+            int rowsAfected = ps.executeUpdate();
+            ps.close();
+            conexion.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void datosEmpregadosNproxecto(Integer numProxectos) {
+        try {
+            String query = """
+            SELECT e.nss, CONCAT(e.nome, ' ', e.apelido_1, ' ', e.apelido_2) AS nome_completo, e.localidade, e.salario
+                FROM empregado e
+                JOIN empregado_proxecto pe ON e.nss = pe.nss_empregado
+                GROUP BY e.nss, e.nome, e.apelido_1, e.apelido_2, e.localidade, e.salario
+                HAVING COUNT(pe.num_proxecto) > ?;
+            """;
+
+            Connection conexion = connectDatabase();
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ps.setInt(1, numProxectos);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                System.out.println("NSS: " + rs.getInt("nss") + ", Nome completo: " + rs.getString("nome_completo") +
+                        ", Localidade: " + rs.getString("localidade") + ", Salario: " + rs.getDouble("salario"));
+            }
+            rs.close();
+            ps.close();
+            conexion.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /* Exercicio 3.1. Obtención de información sobre o SXBD e a conexión */
+
+
 }

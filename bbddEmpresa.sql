@@ -72,7 +72,7 @@ DELIMITER $$
 
 DROP PROCEDURE IF EXISTS pr_cambioDomicilio $$
 CREATE PROCEDURE pr_cambioDomicilio (
-    IN nss_empregado INT UNSIGNED,
+    IN nss_empregado VARCHAR(15),
     IN rua_nueva VARCHAR(30),
     IN numero_rua_nueva INT,
     IN piso_nuevo VARCHAR(4),
@@ -118,7 +118,7 @@ BEGIN
     HAVING COUNT(p.num_proxecto) >= numProxectos;
 END $$
 
-DROP FUNCTION IF EXISTS fn_nEmpDepart;
+DROP FUNCTION IF EXISTS fn_nEmpDepart $$
 CREATE FUNCTION fn_nEmpDepart(nome_departamento VARCHAR(25))
 RETURNS INT
 DETERMINISTIC
@@ -135,9 +135,14 @@ BEGIN
     RETURN num_empregados;
 END $$
 
-
 DELIMITER ;
-select fn_nEmpDepart('PERSOAL');
+
+SELECT e.nss, CONCAT(e.nome, ' ', e.apelido_1, ' ', e.apelido_2) AS nome_completo, e.localidade, e.salario
+            FROM empregado e
+            JOIN empregado_proxecto pe ON e.nss = pe.nss_empregado
+            GROUP BY e.nss, e.nome, e.apelido_1, e.apelido_2, e.localidade, e.salario
+            HAVING COUNT(pe.num_proxecto) > 2;
+
 /* SET FOREIGN_KEY_CHECKS=0; */
 /* SET FOREIGN_KEY_CHECKS=1; */
 

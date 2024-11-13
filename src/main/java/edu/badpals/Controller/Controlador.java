@@ -148,4 +148,20 @@ public class Controlador {
         int numDepartamento = Integer.parseInt(sc.nextLine());
         Conexion.insertProyectoAvanzado(new Proxecto(numProyecto, nombreProyecto, localidad, numDepartamento));
     }
+
+    public static void subirSalarioDept() {
+        System.out.println("Introduce el salario a subir");
+        double salarioSubir = Double.parseDouble(sc.nextLine());
+        System.out.println("Introduce el número del departamento que le quieres subir el precio");
+        int numDepartamento = Integer.parseInt(sc.nextLine());
+        Conexion.subirSalarioDept(numDepartamento, salarioSubir);
+    }
+
+    public static void datosEmpregadosNproxecto() {
+        System.out.println("Introduce el número de proyectos que quieres buscar para obtener los empleados que tienen esos proyectos");
+        int numProyectos = Integer.parseInt(sc.nextLine());
+        Conexion.datosEmpregadosNproxecto(numProyectos);
+    }
+
+    /* Exercicio 3.1. Obtención de información sobre o SXBD e a conexión */
 }
