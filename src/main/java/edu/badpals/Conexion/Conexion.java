@@ -359,7 +359,7 @@ public class Conexion {
         }
     }
 
-    public static void datosEmpregadosNproxecto(Integer numProxectos) {
+    public static ResultSet datosEmpregadosNproxecto(Integer numProxectos) {
         try {
             String query = """
             SELECT e.nss, CONCAT(e.nome, ' ', e.apelido_1, ' ', e.apelido_2) AS nome_completo, e.localidade, e.salario
@@ -370,18 +370,15 @@ public class Conexion {
             """;
 
             Connection conexion = connectDatabase();
-            PreparedStatement ps = conexion.prepareStatement(query);
+            // Crear el PreparedStatement con desplazamiento bidireccional
+            PreparedStatement ps = conexion.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps.setInt(1, numProxectos);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                System.out.println("NSS: " + rs.getInt("nss") + ", Nome completo: " + rs.getString("nome_completo") +
-                        ", Localidade: " + rs.getString("localidade") + ", Salario: " + rs.getDouble("salario"));
-            }
-            rs.close();
-            ps.close();
-            conexion.close();
+
+            return rs;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            return null;
         }
     }
 

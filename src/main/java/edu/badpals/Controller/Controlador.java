@@ -158,9 +158,44 @@ public class Controlador {
     }
 
     public static void datosEmpregadosNproxecto() {
-        System.out.println("Introduce el número de proyectos que quieres buscar para obtener los empleados que tienen esos proyectos");
-        int numProyectos = Integer.parseInt(sc.nextLine());
-        Conexion.datosEmpregadosNproxecto(numProyectos);
+        try {
+            System.out.println("Introduce el número de proyectos que quieres buscar para obtener los empleados que tienen esos proyectos");
+            int numProyectos = Integer.parseInt(sc.nextLine());
+            ResultSet rs = Conexion.datosEmpregadosNproxecto(numProyectos);
+            System.out.println("----------");
+
+            if (rs.first()) {
+                // Visualizar la primera fila
+                System.out.println("Primera fila:");
+                System.out.println("NSS: " + rs.getInt("nss") + ", Nome completo: " + rs.getString("nome_completo") +
+                        ", Localidade: " + rs.getString("localidade") + ", Salario: " + rs.getDouble("salario"));
+            }
+
+            if (rs.last()) {
+                // Visualizar la última fila
+                System.out.println("\nÚltima fila:");
+                System.out.println("NSS: " + rs.getInt("nss") + ", Nome completo: " + rs.getString("nome_completo") +
+                        ", Localidade: " + rs.getString("localidade") + ", Salario: " + rs.getDouble("salario"));
+
+                // Moverse a la antepenúltima fila
+                if (rs.previous() && rs.previous()) {
+                    System.out.println("\nAntepenúltima fila:");
+                    System.out.println("NSS: " + rs.getInt("nss") + ", Nome completo: " + rs.getString("nome_completo") +
+                            ", Localidade: " + rs.getString("localidade") + ", Salario: " + rs.getDouble("salario"));
+                }
+            }
+
+            // Visualizar toda la información en orden inverso
+            rs.afterLast();
+            System.out.println("\nMostrando todas las filas en orden inverso:");
+            while (rs.previous()) {
+                System.out.println("NSS: " + rs.getInt("nss") + ", Nome completo: " + rs.getString("nome_completo") +
+                        ", Localidade: " + rs.getString("localidade") + ", Salario: " + rs.getDouble("salario"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     /* Exercicio 3.1. Obtención de información sobre o SXBD e a conexión */
