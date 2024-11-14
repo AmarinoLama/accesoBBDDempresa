@@ -269,7 +269,7 @@ public class Conexion {
 
     /* Exercicio 2.6. Xestión do resultado dunha consulta */
 
-    public static void tiposResulset() {
+    public static void tiposResulset() { /* todo mejorar salida datos */
         try {
             Connection conexion = connectDatabase();
             DatabaseMetaData dbmd = conexion.getMetaData();
@@ -384,5 +384,135 @@ public class Conexion {
 
     /* Exercicio 3.1. Obtención de información sobre o SXBD e a conexión */
 
+    public static void infoConexion() { /* todo mejorar salida datos */
+        try {
+            Connection conexion = connectDatabase();
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            System.out.println(dbmd.getDatabaseProductName());
+            System.out.println(dbmd.getDatabaseProductVersion());
+            System.out.println(dbmd.getDatabaseMajorVersion());
+            System.out.println(dbmd.getDatabaseMinorVersion());
+            System.out.println(dbmd.getDriverName());
+            System.out.println(dbmd.getDriverMajorVersion());
+            System.out.println(dbmd.getDriverMinorVersion());
+            System.out.println(dbmd.getDriverVersion());
+            System.out.println(dbmd.getURL());
+            System.out.println(dbmd.getUserName());
+            System.out.println(dbmd.isReadOnly());
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 
+    /* Exercicio 3.2. Acceso aos metadatos referente as táboas e os procedementos */
+
+    public static void viewTablas() {
+        try {
+            Connection conexion = connectDatabase();
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            ResultSet tables = dbmd.getTables("bbdd_empresa", null, null, new String[]{"TABLE"});
+            while (tables.next()) {
+                System.out.println("Tabla: " + tables.getString("TABLE_NAME"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void readColumnsEschema(String eschema, String tabla) {
+        try {
+            Connection conexion = connectDatabase();
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            ResultSet columns = dbmd.getColumns(eschema, null, tabla, null);
+            while (columns.next()) {
+                System.out.println("Columna: " + columns.getString("COLUMN_NAME") + ", Tipo de datos: " + columns.getString("TYPE_NAME") +
+                        ", Tamaño: " + columns.getInt("COLUMN_SIZE") + ", Admite nulos: " + columns.getString("IS_NULLABLE"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void viewProcedures() {
+        try {
+            Connection conexion = connectDatabase();
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            ResultSet procedures = dbmd.getProcedures("bbdd_empresa", null, null);
+            while (procedures.next()) {
+                System.out.println("Procedimiento: " + procedures.getString("PROCEDURE_NAME"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void readPKEschema(String eschema, String tabla) {
+        try {
+            Connection conexion = connectDatabase();
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            ResultSet columns = dbmd.getPrimaryKeys(eschema, null, tabla);
+            while (columns.next()) {
+                System.out.println("Clave primaria: " + columns.getString("COLUMN_NAME"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void readFKEschema(String eschema, String tabla) {
+        try {
+            Connection conexion = connectDatabase();
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            ResultSet columns = dbmd.getExportedKeys(eschema, null, tabla);
+            while (columns.next()) {
+                System.out.println("Clave foránea: " + columns.getString("FKCOLUMN_NAME") + ", Tabla referencia: " + columns.getString("PKTABLE_NAME") +
+                        ", Columna referencia: " + columns.getString("PKCOLUMN_NAME"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /* Exercicio 3.3. Acceso aos metadatos referente as funcións, procedementos e características dispoñibles do SXBD */
+
+    public static void infoConexionMejorado() { /* todo mejorar salida datos */
+        try {
+            Connection conexion = connectDatabase();
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            System.out.println(dbmd.getSQLKeywords());
+            System.out.println(dbmd.getIdentifierQuoteString());
+            System.out.println(dbmd.getSearchStringEscape());
+            System.out.println(dbmd.getNumericFunctions());
+            System.out.println(dbmd.getStringFunctions());
+            System.out.println(dbmd.getTimeDateFunctions());
+            System.out.println(dbmd.getSystemFunctions());
+            System.out.println(dbmd.allProceduresAreCallable());
+            System.out.println(dbmd.allTablesAreSelectable());
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    /* Exercicio 3.4. Acceso aos metadatos dos límites impostos polo conectador */
+
+    public static void infoConexionMasMejorado() { /* todo mejorar salida datos */
+        try {
+            Connection conexion = connectDatabase();
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            System.out.println(dbmd.getMaxConnections());
+            System.out.println(dbmd.getMaxStatements());
+            System.out.println(dbmd.getMaxTablesInSelect());
+            System.out.println(dbmd.getMaxTableNameLength());
+            System.out.println(dbmd.getMaxColumnNameLength());
+            System.out.println(dbmd.getMaxStatementLength());
+            System.out.println(dbmd.getMaxProcedureNameLength());
+            System.out.println(dbmd.getMaxColumnsInGroupBy());
+            System.out.println(dbmd.getMaxColumnsInOrderBy());
+            System.out.println(dbmd.getMaxColumnsInSelect());
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    /* Exercicio 3.5. Metadatos sobre as transaccións */
 }

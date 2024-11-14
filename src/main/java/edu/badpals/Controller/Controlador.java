@@ -199,4 +199,48 @@ public class Controlador {
     }
 
     /* Exercicio 3.1. Obtención de información sobre o SXBD e a conexión */
+
+    public static void viewTablas() {
+        Conexion.viewTablas();
+    }
+
+    public static void readColumnsEschema() {
+        System.out.println("Introduce el nombre del esquema que quieres buscar");
+        String esquema = sc.nextLine().toUpperCase();
+        System.out.println("Introduce el nombre de la tabla que quieres buscar");
+        String tabla = sc.nextLine().toUpperCase();
+        Conexion.readColumnsEschema(esquema, tabla);
+    }
+
+    public static void viewProcedures() {
+        Conexion.viewProcedures();
+    }
+
+    public static void readPKEschema() {
+        System.out.println("Introduce el nombre del esquema que quieres buscar");
+        String esquema = sc.nextLine().toUpperCase();
+        System.out.println("Introduce el nombre de la tabla que quieres buscar");
+        String tabla = sc.nextLine().toUpperCase();
+        Conexion.readPKEschema(esquema, tabla);
+    }
+
+    public static void readFKEschema() {
+        System.out.println("Introduce el nombre del esquema que quieres buscar");
+        String esquema = sc.nextLine().toUpperCase();
+        System.out.println("Introduce el nombre de la tabla que quieres buscar");
+        String tabla = sc.nextLine().toUpperCase();
+        Conexion.readFKEschema(esquema, tabla);
+    }
+
+    public static void infoConexionMejorado() {
+        Conexion.infoConexionMejorado();
+    }
+
+    /* Exercicio 3.4. Acceso aos metadatos dos límites impostos polo conectador */
+
+    public static void infoConexionMasMejorado() {
+        Conexion.infoConexionMasMejorado();
+    }
+
+    /* Exercicio 3.5. Metadatos sobre as transaccións */
 }
