@@ -249,4 +249,8 @@ public class Controlador {
     }
 
     /* Exercicio 3.6. Métodos sobre o soporte de características */
+
+    public static void infoOrdenes() {
+        Conexion.infoOrdenes();
+    }
 }

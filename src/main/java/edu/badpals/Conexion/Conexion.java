@@ -529,4 +529,14 @@ public class Conexion {
     }
 
     /* Exercicio 3.6. Métodos sobre o soporte de características */
+
+    public static void infoOrdenes() {
+        try {
+            Connection conexion = connectDatabase();
+            DatabaseMetaData dbmd = conexion.getMetaData();
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 }
