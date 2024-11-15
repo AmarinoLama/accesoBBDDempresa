@@ -269,21 +269,21 @@ public class Conexion {
 
     /* Exercicio 2.6. Xestión do resultado dunha consulta */
 
-    public static void tiposResulset() { /* todo mejorar salida datos */
+    public static void tiposResulset() {
         try {
             Connection conexion = connectDatabase();
             DatabaseMetaData dbmd = conexion.getMetaData();
-            System.out.println(dbmd.getDatabaseProductName());
-            System.out.println(dbmd.getDatabaseProductVersion());
-            System.out.println(dbmd.getDatabaseMajorVersion());
-            System.out.println(dbmd.getDatabaseMinorVersion());
-            System.out.println(dbmd.getDriverName());
-            System.out.println(dbmd.getDriverMajorVersion());
-            System.out.println(dbmd.getDriverMinorVersion());
-            System.out.println(dbmd.getDriverVersion());
-            System.out.println(dbmd.getURL());
-            System.out.println(dbmd.getUserName());
-            System.out.println(dbmd.isReadOnly());
+            System.out.println("Database Product Name: " + dbmd.getDatabaseProductName());
+            System.out.println("Database Product Version: " + dbmd.getDatabaseProductVersion());
+            System.out.println("Database Major Version: " + dbmd.getDatabaseMajorVersion());
+            System.out.println("Database Minor Version: " + dbmd.getDatabaseMinorVersion());
+            System.out.println("Driver Name: " + dbmd.getDriverName());
+            System.out.println("Driver Major Version: " + dbmd.getDriverMajorVersion());
+            System.out.println("Driver Minor Version: " + dbmd.getDriverMinorVersion());
+            System.out.println("Driver Version: " + dbmd.getDriverVersion());
+            System.out.println("URL: " + dbmd.getURL());
+            System.out.println("User Name: " + dbmd.getUserName());
+            System.out.println("Is Read Only: " + dbmd.isReadOnly());
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -384,21 +384,21 @@ public class Conexion {
 
     /* Exercicio 3.1. Obtención de información sobre o SXBD e a conexión */
 
-    public static void infoConexion() { /* todo mejorar salida datos */
+    public static void infoConexion() {
         try {
             Connection conexion = connectDatabase();
             DatabaseMetaData dbmd = conexion.getMetaData();
-            System.out.println(dbmd.getDatabaseProductName());
-            System.out.println(dbmd.getDatabaseProductVersion());
-            System.out.println(dbmd.getDatabaseMajorVersion());
-            System.out.println(dbmd.getDatabaseMinorVersion());
-            System.out.println(dbmd.getDriverName());
-            System.out.println(dbmd.getDriverMajorVersion());
-            System.out.println(dbmd.getDriverMinorVersion());
-            System.out.println(dbmd.getDriverVersion());
-            System.out.println(dbmd.getURL());
-            System.out.println(dbmd.getUserName());
-            System.out.println(dbmd.isReadOnly());
+            System.out.println("Database Product Name: " + dbmd.getDatabaseProductName());
+            System.out.println("Database Product Version: " + dbmd.getDatabaseProductVersion());
+            System.out.println("Database Major Version: " + dbmd.getDatabaseMajorVersion());
+            System.out.println("Database Minor Version: " + dbmd.getDatabaseMinorVersion());
+            System.out.println("Driver Name: " + dbmd.getDriverName());
+            System.out.println("Driver Major Version: " + dbmd.getDriverMajorVersion());
+            System.out.println("Driver Minor Version: " + dbmd.getDriverMinorVersion());
+            System.out.println("Driver Version: " + dbmd.getDriverVersion());
+            System.out.println("URL: " + dbmd.getURL());
+            System.out.println("User Name: " + dbmd.getUserName());
+            System.out.println("Is Read Only: " + dbmd.isReadOnly());
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -475,19 +475,19 @@ public class Conexion {
 
     /* Exercicio 3.3. Acceso aos metadatos referente as funcións, procedementos e características dispoñibles do SXBD */
 
-    public static void infoConexionMejorado() { /* todo mejorar salida datos */
+    public static void infoConexionMejorado() {
         try {
             Connection conexion = connectDatabase();
             DatabaseMetaData dbmd = conexion.getMetaData();
-            System.out.println(dbmd.getSQLKeywords());
-            System.out.println(dbmd.getIdentifierQuoteString());
-            System.out.println(dbmd.getSearchStringEscape());
-            System.out.println(dbmd.getNumericFunctions());
-            System.out.println(dbmd.getStringFunctions());
-            System.out.println(dbmd.getTimeDateFunctions());
-            System.out.println(dbmd.getSystemFunctions());
-            System.out.println(dbmd.allProceduresAreCallable());
-            System.out.println(dbmd.allTablesAreSelectable());
+            System.out.println("Palabras clave SQL: " + dbmd.getSQLKeywords());
+            System.out.println("Cadena de comillas identificadoras: " + dbmd.getIdentifierQuoteString());
+            System.out.println("Cadena de escape de búsqueda: " + dbmd.getSearchStringEscape());
+            System.out.println("Funciones numéricas: " + dbmd.getNumericFunctions());
+            System.out.println("Funciones de cadena: " + dbmd.getStringFunctions());
+            System.out.println("Funciones de fecha y hora: " + dbmd.getTimeDateFunctions());
+            System.out.println("Funciones del sistema: " + dbmd.getSystemFunctions());
+            System.out.println("¿Todos los procedimientos son llamables?: " + dbmd.allProceduresAreCallable());
+            System.out.println("¿Todas las tablas son seleccionables?: " + dbmd.allTablesAreSelectable());
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -499,20 +499,34 @@ public class Conexion {
         try {
             Connection conexion = connectDatabase();
             DatabaseMetaData dbmd = conexion.getMetaData();
-            System.out.println(dbmd.getMaxConnections());
-            System.out.println(dbmd.getMaxStatements());
-            System.out.println(dbmd.getMaxTablesInSelect());
-            System.out.println(dbmd.getMaxTableNameLength());
-            System.out.println(dbmd.getMaxColumnNameLength());
-            System.out.println(dbmd.getMaxStatementLength());
-            System.out.println(dbmd.getMaxProcedureNameLength());
-            System.out.println(dbmd.getMaxColumnsInGroupBy());
-            System.out.println(dbmd.getMaxColumnsInOrderBy());
-            System.out.println(dbmd.getMaxColumnsInSelect());
+            System.out.println("Número máximo de conexiones: " + dbmd.getMaxConnections());
+            System.out.println("Número máximo de sentencias: " + dbmd.getMaxStatements());
+            System.out.println("Número máximo de tablas en una selección: " + dbmd.getMaxTablesInSelect());
+            System.out.println("Longitud máxima del nombre de una tabla: " + dbmd.getMaxTableNameLength());
+            System.out.println("Longitud máxima del nombre de una columna: " + dbmd.getMaxColumnNameLength());
+            System.out.println("Longitud máxima de una sentencia: " + dbmd.getMaxStatementLength());
+            System.out.println("Longitud máxima del nombre de un procedimiento: " + dbmd.getMaxProcedureNameLength());
+            System.out.println("Número máximo de columnas en un GROUP BY: " + dbmd.getMaxColumnsInGroupBy());
+            System.out.println("Número máximo de columnas en un ORDER BY: " + dbmd.getMaxColumnsInOrderBy());
+            System.out.println("Número máximo de columnas en una selección: " + dbmd.getMaxColumnsInSelect());
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
     /* Exercicio 3.5. Metadatos sobre as transaccións */
+
+    public static void infoConexionOtro() {
+        try {
+            Connection conexion = connectDatabase();
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            System.out.println("Soporta transaccións: " + dbmd.supportsTransactions());
+            System.out.println("Nivel illamiento de las transaccións: " + dbmd.getDefaultTransactionIsolation());
+            System.out.println("Soportan sentenzas de manipulación de datos y de definición de datos dentro de las transaccións: " + dbmd.supportsDataDefinitionAndDataManipulationTransactions());
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    /* Exercicio 3.6. Métodos sobre o soporte de características */
 }

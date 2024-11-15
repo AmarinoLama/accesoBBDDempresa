@@ -243,4 +243,10 @@ public class Controlador {
     }
 
     /* Exercicio 3.5. Metadatos sobre as transaccións */
+
+    public static void infoConexionOtro() {
+        Conexion.infoConexionOtro();
+    }
+
+    /* Exercicio 3.6. Métodos sobre o soporte de características */
 }
