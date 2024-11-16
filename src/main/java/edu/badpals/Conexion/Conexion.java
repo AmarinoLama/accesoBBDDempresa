@@ -534,7 +534,41 @@ public class Conexion {
         try {
             Connection conexion = connectDatabase();
             DatabaseMetaData dbmd = conexion.getMetaData();
+            System.out.println("Soporta ADD COLUMN en ALTER TABLE: " + dbmd.supportsAlterTableWithAddColumn());
+            System.out.println("Soporta DROP COLUMN en ALTER TABLE: " + dbmd.supportsAlterTableWithDropColumn());
+            System.out.println("En los alias de columnas puede usarse la palabra AS: " + dbmd.supportsColumnAliasing());
+            System.out.println("Devolve true si o resultado de concatenar un NULL e un NOT NULL resulta NULL: " + dbmd.nullPlusNonNullIsNull());
+            System.out.println("Devolve true si se soportan as conversións entre tipos de datos JDBC: " + dbmd.supportsConvert());
+            System.out.println("Devolve true si se soportan os nomes de táboas correlacionadas: " + dbmd.supportsTableCorrelationNames());
+            System.out.println("Devolve true si si se soporta o uso dunha columna que non está na instrución SELECT " +
+                    "nunha cláusula ORDER BY: " + dbmd.supportsOrderByUnrelated ());
+            System.out.println("Devolve true si se soporta a cláusula GROUP BY: " + dbmd.supportsGroupBy());
+            System.out.println("Devolve true si se admite o uso dunha columna que non está na instrución SELECT nunha" +
+                    "cláusula GROUP BY: " + dbmd.supportsGroupByUnrelated());
+            System.out.println("Devolve true si se soporta a cláusula LIKE: " + dbmd.supportsLikeEscapeClause());
+            System.out.println("Devolve true si se soporta os outer joins: " + dbmd.supportsOuterJoins());
+            System.out.println("Devolve true si se soporta as subconsultas EXIST: " + dbmd.supportsSubqueriesInExists());
+            System.out.println("Devolve true si se soporta as subconsultas nas expresións de comparación: " + dbmd.supportsSubqueriesInComparisons());
+            System.out.println("Devolve true si se soporta as subconsultas nas expresións IN: " + dbmd.supportsSubqueriesInIns());
+            System.out.println("Devolve true si se soporta as subconsultas nas expresións cuantificativas: " + dbmd.supportsSubqueriesInQuantifieds());
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 
+    /* Exercicio 3.7. Metadatos do ResultSet */
+
+    public static void metadatosResulset(String query) {
+        try {
+            Connection conexion = connectDatabase();
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(query);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            System.out.println("Número de columnas: " + rsmd.getColumnCount());
+            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                System.out.println("Nombre columna: " + rsmd.getColumnName(i) + ", Tipo de datos: " + rsmd.getColumnTypeName(i) +
+                        ", Tamaño: " + rsmd.getColumnDisplaySize(i) + ", Admite nulos: " + rsmd.isNullable(i));
+            }
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }

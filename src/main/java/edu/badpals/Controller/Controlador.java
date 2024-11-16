@@ -253,4 +253,12 @@ public class Controlador {
     public static void infoOrdenes() {
         Conexion.infoOrdenes();
     }
+
+    /* Exercicio 3.7. Metadatos do ResultSet */
+
+    public static void metadatosResulset() {
+        System.out.println("Escribe una query para obtener los metadatos del resulset");
+        String query = sc.nextLine();
+        Conexion.metadatosResulset(query);
+    }
 }
